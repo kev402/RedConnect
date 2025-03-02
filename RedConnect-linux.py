@@ -54,7 +54,7 @@ network={{
         print(f'Conectado a {ssid} usando wpa_supplicant.')
 
 def main():
-    interface = input("Por favor, introduce el nombre de tu interfaz de red Wi-Fi (ej. wlan0, wlp3s0), usa el comando "ip a" o "ifconfig" si no estás seguro: ")
+    interface = input("Por favor, introduce el nombre de tu interfaz de red Wi-Fi (ej. wlan0, wlp3s0), usa el comando 'ip a' o 'ifconfig' si no estás seguro: ")
     
     while True:
         if not is_connected():
