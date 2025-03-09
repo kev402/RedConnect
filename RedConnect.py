@@ -50,8 +50,8 @@ def connect_to_network(ssid, password):
         file.write(profile)
 
     # Conectar a la red usando netsh
-    os.system(f'netsh wlan add profile filename="{profile_path}"')
-    os.system(f'netsh wlan connect name="{ssid}"')
+    subprocess.run(["netsh", "wlan", "add", "profile", f"filename={profile_path}"], check=True)
+    subprocess.run(["netsh", "wlan", "connect", f"name={ssid}"], check=True)
 
     # Eliminar el perfil temporal
     os.remove(profile_path)
