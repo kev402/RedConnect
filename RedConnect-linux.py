@@ -1,4 +1,4 @@
-import os
+
 import time
 import subprocess
 
@@ -35,8 +35,8 @@ def connect_to_network(ssid, password, interface):
         print(f'Intentando conexión manual con iwconfig y wpa_supplicant...')
         
         # Primero, desconectarse de cualquier red
-        os.system(f'sudo ifconfig {interface} down')
-        os.system(f'sudo ifconfig {interface} up')
+        subprocess.run(["sudo", "ifconfig", interface, "down"], check=True)
+        subprocess.run(["sudo", "ifconfig", interface, "up"], check=True)
         
         # Crear archivo de configuración WPA para wpa_supplicant
         with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w') as f:
@@ -47,10 +47,9 @@ network={{
 }}
             """)
         
-        # Conectar usando wpa_supplicant
-        os.system(f'sudo wpa_supplicant -B -i {interface} -c /etc/wpa_supplicant/wpa_supplicant.conf')
-        os.system(f'sudo dhclient {interface}')
-        
+        subprocess.run(["sudo", "wpa_supplicant", "-B", "-i", interface, "-c", "/etc/wpa_supplicant/wpa_supplicant.conf"], check=True)
+        subprocess.run(["sudo", "dhclient", interface], check=True)
+
         print(f'Conectado a {ssid} usando wpa_supplicant.')
 
 def main():
