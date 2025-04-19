@@ -1,13 +1,28 @@
 
+import os
 import time
+import json
 import subprocess
 
-# Lista de redes y sus contraseñas
-networks = {
-    'SSID1': 'password1',
-    'SSID2': 'password2',
-    # Añade más redes y contraseñas según sea necesario
-}
+def existe():
+    return os.path.exists("redes.json")
+
+def abrir():
+    with open("redes.json", "r", encoding="utf-8") as archivo:
+        redes = json.load(archivo)
+        return redes
+    
+if existe():
+    networks = abrir()
+
+else:
+    cantidad = int(input("Ingresa cuantas redes quieres verificar: "))
+    networks = {}
+    while cantidad > 0:
+        ssid = input("Ingresa el SSID de la red: ")
+        contrasena = input("Ingresa la contraseña: ")
+        networks[ssid] = contrasena
+        cantidad -= 1
 
 def is_connected():
     # Verificar la conectividad utilizando 'nmcli' (si está disponible)
